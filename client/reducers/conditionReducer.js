@@ -43,7 +43,6 @@ actions[actionTypes.SET_RADIUS] = (state, action) => {
 };
 
 actions[actionTypes.SET_CUISINE] = (state, action) => {
-  console.log('triggered');
   return { ...state, cuisines: action.payload };
 };
 

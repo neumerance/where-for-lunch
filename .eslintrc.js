@@ -11,6 +11,7 @@ module.exports = {
    "error",
    {
     "exceptMethods": [
+     "render",
      "getChildContext",
      "componentDidMount",
      "componentWillMount",
