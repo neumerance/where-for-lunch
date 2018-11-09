@@ -2,36 +2,50 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Button from 'components/Button/Button';
+// import Button from 'components/Button/Button';
 import placeActions from 'actions/placeActions';
 import conditionActions from 'actions/conditionActions';
-import Place from 'components/Place/Place';
+// import Place from 'components/Place/Place';
 import Condition from 'components/Condition/Condition';
 
 class HomePage extends Component {
+  componentDidMount() {
+    console.log('props', this.props);
+  }
+
   handleOnClick = () => {
     this.props.fetchPlaces(this.props.condition);
   }
 
-  handleOnConditionChange = (value) => {
-    this.props.setRadius(value);
+  handleConditionActions = (args = {}) => {
+    if (!args.type) { return; }
+    if (args.type === 'setRadius') {
+      if (!args.value) { return; }
+      // if (!(args.value > 0)) { alert('Radius must be a positive number'); }
+      this.props.setRadius(args.value);
+    }
+    if (args.type === 'updateCuisine') {
+      const cuisines = this.props.condition.cuisines;
+      const cuisineIndex = cuisines.findIndex((cuisine) => {
+        return cuisine.label === args.value.label;
+      });
+      cuisines[cuisineIndex] = args.value;
+      this.props.setCuisines(cuisines);
+    }
+    if (args.type === 'submit') { this.handleOnClick(); }
   }
 
   render() {
-    const { condition, place } = this.props;
     return (
-      <div className="homePageWrapper">
-        <Place place={place} />
-        <div className="searchWrapper">
-          <Condition condition={condition} action={this.handleOnConditionChange}/>
-          <Button onClick={this.handleOnClick} theme="homepageClick" disabled={!this.coordinatesIsSet()} />
-        </div>
+      <div className="row">
+        <Condition condition={this.props.condition} action={this.handleConditionActions}/>
       </div>
     );
   }
 
   coordinatesIsSet() {
-    if (this.props.longitude && this.props.latitude) { return true; }
+    const { longitude, latitude } = this.props.condition;
+    if (longitude && latitude) { return true; }
     return false;
   }
 }
@@ -39,23 +53,21 @@ class HomePage extends Component {
 const mapStateToProps = state => ({
   condition: state.condition,
   place: state.place,
-  latitude: state.condition.latitude,
-  longitude: state.condition.longitude,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     fetchPlaces: placeActions.fetchPlaces,
     setRadius: conditionActions.setRadius,
+    setCuisines: conditionActions.setCuisines,
   }, dispatch);
 
 HomePage.propTypes = {
   condition: PropTypes.object,
   place: PropTypes.object,
-  fetchPlaces: PropTypes.func,
-  setRadius: PropTypes.func,
-  latitude: PropTypes.number,
-  longitude: PropTypes.number,
+  fetchPlaces: PropTypes.func.isRequired,
+  setRadius: PropTypes.func.isRequired,
+  setCuisines: PropTypes.func,
 };
 export default connect(
   mapStateToProps,
