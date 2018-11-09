@@ -1,6 +1,7 @@
 export function toSearchPlacesParams(params) {
   const result = {
     term: 'food',
+    categories: params.categories,
     latitude: params.latitude,
     longitude: params.longitude,
     radius: params.radius,

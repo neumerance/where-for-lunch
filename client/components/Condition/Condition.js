@@ -2,8 +2,10 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import conditionActions from 'actions/conditionActions';
+import conditionActions from '../../actions/conditionActions';
+import placeActions from '../../actions/placeActions';
 import LocationSearchInput from './LocationSearchInput';
+import * as placeApi from '../../services/placeApi';
 
 import styles from './Condition.css';
 
@@ -21,6 +23,13 @@ class Condition extends PureComponent {
     });
     cuisines[cuisineIndex] = cuisine;
     this.props.setCuisines(cuisines);
+  }
+
+  handleSearch = () => {
+    this.props.fetching();
+    placeApi.searchPlaces(this.props.condition).then((response) => {
+      this.props.setPlaces({ places: response });
+    });
   }
 
   renderCuisineCheckboxes = () => {
@@ -65,7 +74,7 @@ class Condition extends PureComponent {
           </label>
         </div>
         <div className="text-center">
-          <button type="submit" className="btn btn-primary btn-sm mb-2" disabled={!this.coordinatesIsSet()}>
+          <button type="submit" className="btn btn-primary btn-sm mb-2" disabled={!this.coordinatesIsSet()} onClick={this.handleSearch}>
             Search
           </button>
         </div>
@@ -82,12 +91,17 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({
     setRadius: conditionActions.setRadius,
     setCuisines: conditionActions.setCuisines,
+    setPlaces: placeActions.setPlaces,
+    fetching: placeActions.fetching,
   }, dispatch);
 
 Condition.propTypes = {
   condition: PropTypes.object,
   setRadius: PropTypes.func.isRequired,
-  setCuisines: PropTypes.func,
+  setCuisines: PropTypes.func.isRequired,
+  setPlaces: PropTypes.func.isRequired,
+  fetching: PropTypes.func.isRequired,
+  place: PropTypes.object,
 };
 export default connect(
   mapStateToProps,
