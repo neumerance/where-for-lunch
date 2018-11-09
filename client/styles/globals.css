@@ -124,5 +124,9 @@ body {
 }
 
 :global(.width-100) {
-  width: 100%;
+  width: 100% !important;
+}
+
+:global(.autocomplete-dropdown-container) {
+  color: #000000;
 }

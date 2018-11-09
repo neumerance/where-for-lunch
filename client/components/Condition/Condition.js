@@ -1,39 +1,26 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import conditionActions from 'actions/conditionActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import conditionActions from 'actions/conditionActions';
+import LocationSearchInput from './LocationSearchInput';
 
 import styles from './Condition.css';
 
 class Condition extends PureComponent {
-  handleConditionActions = (args = {}) => {
-    if (!args.type) { return; }
-    if (args.type === 'setRadius') {
-      if (!args.value) { return; }
-      this.props.setRadius(args.value);
-    }
-    if (args.type === 'updateCuisine') {
-      const cuisines = this.props.condition.cuisines;
-      const cuisineIndex = cuisines.findIndex((cuisine) => {
-        return cuisine.label === args.value.label;
-      });
-      cuisines[cuisineIndex] = args.value;
-      this.props.setCuisines(cuisines);
-    }
-  }
-
   handleOnChangeRadiusAction = (e) => {
-    this.handleConditionActions({ value: e.target.value, type: 'setRadius' });
-  }
-
-  handleOnSearchAction = () => {
-    this.handleConditionActions({ type: 'submit' });
+    if (!e.target.value) { return; }
+    this.props.setRadius(e.target.value);
   }
 
   handleCuisineSelection = (e, cuisine) => {
     cuisine.selected = e.target.checked;
-    this.handleConditionActions({ type: 'updateCuisine', value: cuisine });
+    const cuisines = this.props.condition.cuisines;
+    const cuisineIndex = cuisines.findIndex((c) => {
+      return c.label === cuisine.label;
+    });
+    cuisines[cuisineIndex] = cuisine;
+    this.props.setCuisines(cuisines);
   }
 
   renderCuisineCheckboxes = () => {
@@ -64,6 +51,9 @@ class Condition extends PureComponent {
   render() {
     return (
       <div className={`form-inline ${styles.searchForm} p-4`}>
+        <div className="form-group width-100 mb-2">
+          <LocationSearchInput />
+        </div>
         <div className="form-group mb-2">
           <label className="mr-3">Cuisines:</label>{this.renderCuisineCheckboxes()}
         </div>
@@ -75,7 +65,7 @@ class Condition extends PureComponent {
           </label>
         </div>
         <div className="text-center">
-          <button type="submit" className="btn btn-primary btn-sm mb-2" onClick={this.handleOnSearchAction}>
+          <button type="submit" className="btn btn-primary btn-sm mb-2" disabled={!this.coordinatesIsSet()}>
             Search
           </button>
         </div>
