@@ -59,8 +59,13 @@ class Place extends React.Component {
                 <span className="fa fa-phone mr-2"></span>{place.display_phone}
               </li>
             </ul>
-            <div>
-              <Map coordinates={coordinates} />
+            <div className="mt-5">
+              <Map
+                coordinates={coordinates}
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAod6AoCBJyun0ST5Kg3BSKW5SiP33uAM0&libraries=places"
+                containerElement={<div style={{ height: `400px` }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+              />
             </div>
           </div>
         </div>

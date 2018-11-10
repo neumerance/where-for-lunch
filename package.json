@@ -29,6 +29,7 @@
     "postcss-nested": "^3.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-google-maps": "^9.4.5",
     "react-google-maps-loader": "^4.2.3",
     "react-hot-loader": "^4.0.0",
     "react-places-autocomplete": "^7.2.0",
