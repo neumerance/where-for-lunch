@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { getPlaceDetails } from '../../services/placeApi';
 import placeActions from '../../actions/placeActions';
 import Map from './Map';
+import Gallery from './Gallery';
 import styles from './Place.css';
 
 class Place extends React.Component {
@@ -43,12 +44,9 @@ class Place extends React.Component {
     return (
       <div className={styles.place}>
         <div className="row">
-          <div className="col-sm-5">
-            <img className="display-block" src={place.image_url} />
-          </div>
           <div className="col-sm-7">
             <span className="float-right">{this.openingDisplay()}</span>
-            <h2>{place.name}</h2>
+            <h4>{place.name}</h4>
             <StarRatingComponent name={`rate_${place.id}`} starCount={5} value={place.rating} editing={false} />
             <div>{this.renderCategories()}</div>
             <ul className={styles.contacts}>
@@ -59,15 +57,17 @@ class Place extends React.Component {
                 <span className="fa fa-phone mr-2"></span>{place.display_phone}
               </li>
             </ul>
-            <div className="mt-5">
-              <Map
-                coordinates={coordinates}
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAod6AoCBJyun0ST5Kg3BSKW5SiP33uAM0&libraries=places"
-                containerElement={<div style={{ height: `400px` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-              />
-            </div>
           </div>
+          <div className="col-sm-5">
+            <Map
+              coordinates={coordinates}
+              containerElement={<div style={{ height: `240px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+            />
+          </div>
+        </div>
+        <div className="mt-3">
+          <Gallery place={place} />
         </div>
       </div>
     );
