@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getPlaceDetails } from '../../services/placeApi';
 import placeActions from '../../actions/placeActions';
+import Map from './Map';
 import styles from './Place.css';
 
 class Place extends React.Component {
@@ -38,6 +39,7 @@ class Place extends React.Component {
   render() {
     const place = this.props.selectedPlace;
     if (!place.id) { return null; }
+    const coordinates = { lat: place.coordinates.latitude, lng: place.coordinates.longitude };
     return (
       <div className={styles.place}>
         <div className="row">
@@ -57,6 +59,9 @@ class Place extends React.Component {
                 <span className="fa fa-phone mr-2"></span>{place.display_phone}
               </li>
             </ul>
+            <div>
+              <Map coordinates={coordinates} />
+            </div>
           </div>
         </div>
       </div>
