@@ -4,6 +4,7 @@ import * as actionTypes from '../actions/placeActionTypes';
 const initialState = {
   places: [],
   fetching: false,
+  selectedPlace: {},
 };
 const placeReducer = handleActions(
   {
@@ -14,7 +15,9 @@ const placeReducer = handleActions(
       return { ...state, fetching: true };
     },
     [actionTypes.SET_PLACES](state, action) {
-      console.log('action', action);
+      return { ...state, fetching: false, ...action.payload };
+    },
+    [actionTypes.SET_PLACE](state, action) {
       return { ...state, fetching: false, ...action.payload };
     },
   },

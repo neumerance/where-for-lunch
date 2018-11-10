@@ -54,13 +54,13 @@ class LocationSearchInput extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <div className="width-100">
-            <span>{this.props.condition.latitude}, {this.props.condition.longitude}</span>
             <input
               {...getInputProps({
                 placeholder: 'Search Places ...',
                 className: 'location-search-input form-control width-100',
               })}
             />
+            <small className="float-right">coordinates: {this.props.condition.latitude}, {this.props.condition.longitude}</small>
             {this.renderSuggestions(suggestions, getSuggestionItemProps)}
           </div>
         )}

@@ -74,8 +74,8 @@ class Condition extends PureComponent {
           </label>
         </div>
         <div className="text-center">
-          <button type="submit" className="btn btn-primary btn-sm mb-2" disabled={!this.coordinatesIsSet()} onClick={this.handleSearch}>
-            Search
+          <button type="submit" className="btn btn-primary btn-sm mb-2" disabled={!this.coordinatesIsSet() || this.props.place.fetching} onClick={this.handleSearch}>
+            {this.props.place.fetching ? 'Searching' : 'Search'}
           </button>
         </div>
       </div>
@@ -85,6 +85,7 @@ class Condition extends PureComponent {
 
 const mapStateToProps = state => ({
   condition: state.condition,
+  place: state.place,
 });
 
 const mapDispatchToProps = dispatch =>

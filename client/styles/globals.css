@@ -130,3 +130,8 @@ body {
 :global(.autocomplete-dropdown-container) {
   color: #000000;
 }
+
+:global(.display-block) {
+  display: block;
+  width: 100%;
+}

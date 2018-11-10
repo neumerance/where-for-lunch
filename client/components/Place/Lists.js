@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import StarRatingComponent from 'react-star-rating-component';
+import { Link } from 'react-router-dom';
 
-class Lists extends React.PureComponent {
+class Lists extends React.Component {
   thead() {
     const width120 = { width: 120 };
     return (
@@ -32,7 +33,11 @@ class Lists extends React.PureComponent {
           <td>
             <StarRatingComponent name={`rate_${place.id}`} starCount={5} value={place.rating} editing={false} />
           </td>
-          <td>{place.name}</td>
+          <td>
+            <Link to={`place/${place.id}`}>
+              {place.name}
+            </Link>
+          </td>
           <td>{place.address}</td>
         </tr>
       );
