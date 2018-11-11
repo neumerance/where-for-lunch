@@ -1,5 +1,5 @@
 module.exports = {
-  verbose: true,
+  verbose: false,
   moduleNameMapper: {
     '^client/(.*)': '<rootDir>/../client/$1',
     '^server/(.*)': '<rootDir>/../server/$1',

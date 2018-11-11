@@ -48,12 +48,12 @@ class Place extends React.Component {
             <span className="float-right">{this.openingDisplay()}</span>
             <h4>{place.name}</h4>
             <StarRatingComponent name={`rate_${place.id}`} starCount={5} value={place.rating} editing={false} />
-            <div>{this.renderCategories()}</div>
-            <ul className={styles.contacts}>
-              <li>
-                <span className="fa fa-home mr-2"></span>{place.location.display_address}
+            <div className="categories">{this.renderCategories()}</div>
+            <ul className={`contacts ${styles.contacts}`}>
+              <li className="address">
+                <span className="fa fa-home mr-2"></span>{place.location.display_address.join(' ')}
               </li>
-              <li>
+              <li className="phone">
                 <span className="fa fa-phone mr-2"></span>{place.display_phone}
               </li>
             </ul>
@@ -95,3 +95,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Place);
+
+export const TestPlaceComponent = Place;
