@@ -1,12 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import conditionActions from 'actions/conditionActions';
-import PropTypes from 'prop-types';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from 'react-places-autocomplete';
+import conditionActions from '../../actions/conditionActions';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {

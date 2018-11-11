@@ -3,14 +3,14 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { mount, shallow } from 'enzyme';
 import { Provider } from 'react-redux';
-import Place, { TestPlaceComponent } from 'client/components/Place/Place';
-import * as factory from './fixtures/Place';
+import Place, { TestPlaceComponent } from '../../../client/components/Place/Place';
+import * as factory from '../fixtures/Place';
 import configureStore from 'redux-mock-store';
 
 const setup = () => {
   const props = {
-    params: { id: factory.place.id },
-    selectedPlace: factory.place,
+    params: { id: factory.place.selectedPlace.id },
+    selectedPlace: factory.place.selectedPlace,
     setPlace: jest.fn(),
     fetching: jest.fn(),
   }
@@ -27,9 +27,10 @@ describe('Place component', () => {
   const { enzymeWrapper } = setup();
 
   it('should have title', () => {
-    expect(enzymeWrapper.find('h4').text()).toEqual(factory.place.name);
-    expect(enzymeWrapper.find('div.categories > span').length).toEqual(factory.place.categories.length);
-    expect(enzymeWrapper.find('ul.contacts > li.address').text()).toEqual(factory.place.location.display_address.join(' '));
+    const selectedPlace = factory.place.selectedPlace;
+    expect(enzymeWrapper.find('h4').text()).toEqual(selectedPlace.name);
+    expect(enzymeWrapper.find('div.categories > span').length).toEqual(selectedPlace.categories.length);
+    expect(enzymeWrapper.find('ul.contacts > li.address').text()).toEqual(selectedPlace.location.display_address.join(' '));
   });
 });
 
@@ -47,8 +48,8 @@ describe('connected Place component', () => {
         selectedPlace: {} 
       } 
     });
-    httpMock.onGet(`http://localhost:3001/api/places/${factory.place.id}`).reply(200, factory.place);
-    wrapper = mount(<Provider store={store}><Place params={{ id: factory.place.id }} /></Provider>);
+    httpMock.onGet(`http://localhost:3001/api/places/${factory.place.selectedPlace.id}`).reply(200, factory.place.selectedPlace);
+    wrapper = mount(<Provider store={store}><Place params={{ id: factory.place.selectedPlace.id }} /></Provider>);
   });
 
   it ('should renders place data', () => {

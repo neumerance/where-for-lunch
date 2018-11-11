@@ -37,7 +37,12 @@ class Condition extends PureComponent {
       return (
         <div key={`cuisine_${key}`} className="form-check mr-2">
           <label className="form-check-label">
-            <input className="form-check-input" type="checkbox" checked={cuisine.selected} onChange={(e) => { this.handleCuisineSelection(e, cuisine); }} /> { cuisine.label }
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name={cuisine.label.toLowerCase()}
+              checked={cuisine.selected}
+              onChange={(e) => { this.handleCuisineSelection(e, cuisine); }} /> { cuisine.label }
           </label>
         </div>
       );
@@ -63,7 +68,7 @@ class Condition extends PureComponent {
         <div className="form-group width-100 mb-2">
           <LocationSearchInput />
         </div>
-        <div className="form-group mb-2">
+        <div id="cuisine-selection" className="form-group mb-2">
           <label className="mr-3">Cuisines:</label>{this.renderCuisineCheckboxes()}
         </div>
         <div className="form-group width-100 mb-2">
@@ -108,3 +113,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Condition);
+
+export const TestConditionComponent = Condition;
