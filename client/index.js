@@ -1,3 +1,4 @@
+import 'index.css';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -6,12 +7,12 @@ import createHistory from 'history/createHashHistory';
 import createSagaMiddleware from 'redux-saga';
 import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import rootReducer from 'reducers';
-import sagas from 'sagas';
-import App from 'containers/App';
-import HomePage from 'containers/HomePage';
-import { fetchLatLng } from 'lib/navigatorHelper';
-import 'index.css';
+import rootReducer from './reducers';
+import sagas from './sagas';
+import App from './containers/App';
+import HomePage from './containers/HomePage';
+import ShowPlace from './containers/ShowPlace';
+import { fetchLatLng } from './lib/navigatorHelper';
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -31,6 +32,11 @@ render(
       <Router history={history}>
         <Switch>
           <Route path="/" exact component={ HomePage } />
+          <Route path="/place/:id" exact render={(props) => {
+            return (
+              <ShowPlace {...props} />
+            );
+          }} />
         </Switch>
       </Router>
     </App>

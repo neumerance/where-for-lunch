@@ -12,3 +12,4 @@ export function fetchLatLng(store) {
     console.log('give it to me! ', err);
   });
 }
+
