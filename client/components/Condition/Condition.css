@@ -3,3 +3,8 @@
     display: inline;
   }
 }
+
+.searchForm {
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+}

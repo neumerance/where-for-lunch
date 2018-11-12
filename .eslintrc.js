@@ -7,18 +7,6 @@ module.exports = {
    "off",
    11
   ],
-  "class-methods-use-this": [
-   "error",
-   {
-    "exceptMethods": [
-     "getChildContext",
-     "componentDidMount",
-     "componentWillMount",
-     "componentWillUpdate",
-     "componentWillReceiveProps"
-    ]
-   }
-  ],
   "consistent-return": 0,
   "curly": 0,
   "default-case": [
