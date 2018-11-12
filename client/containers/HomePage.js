@@ -16,6 +16,7 @@ class HomePage extends Component {
   handleOnConditionChange = (value) => {
     this.props.setRadius(value);
   }
+
   render() {
     const { condition, place } = this.props;
     return (
@@ -23,16 +24,23 @@ class HomePage extends Component {
         <Place place={place} />
         <div className="searchWrapper">
           <Condition condition={condition} action={this.handleOnConditionChange}/>
-          <Button onClick={this.handleOnClick} theme="homepageClick" />
+          <Button onClick={this.handleOnClick} theme="homepageClick" disabled={!this.coordinatesIsSet()} />
         </div>
       </div>
     );
+  }
+
+  coordinatesIsSet() {
+    if (this.props.longitude && this.props.latitude) { return true; }
+    return false;
   }
 }
 
 const mapStateToProps = state => ({
   condition: state.condition,
   place: state.place,
+  latitude: state.condition.latitude,
+  longitude: state.condition.longitude,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -46,6 +54,8 @@ HomePage.propTypes = {
   place: PropTypes.object,
   fetchPlaces: PropTypes.func,
   setRadius: PropTypes.func,
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
 };
 export default connect(
   mapStateToProps,
